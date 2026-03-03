@@ -2,8 +2,12 @@
 <html lang="sr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harmonia Caffe – Campaign Proposal</title>
+<!-- v9 built 2026-03-03 19:54 -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,35 +24,43 @@
 }
 body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(--cream); min-height: 100vh; }
 
-/* ── TOOLBAR ── */
-#toolbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: #0d0b14; border-bottom: 1px solid var(--accent-dim);
-  padding: 9px 18px; display: flex; align-items: center; gap: 10px;
-  flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
-  height: 46px; /* fixed height so panel/main offset is always predictable */
+/* ── FLOATING EDIT TAB ── */
+#edit-fab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px 0 0 8px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  box-shadow: -3px 0 20px rgba(139,92,246,0.4);
+  transition: background 0.2s, right 0.3s;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  user-select: none;
 }
-#toolbar::-webkit-scrollbar { display: none; }
-.tb-brand { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--gold-light); font-style: italic; margin-right: 4px; }
-.tb-btn {
-  background: rgba(139,92,246,0.12); border: 1px solid var(--accent-dim); color: #c4b5fd;
-  padding: 5px 13px; border-radius: 6px; font-size: 11px; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap;
-}
-.tb-btn:hover { background: rgba(139,92,246,0.28); color: #fff; }
-.tb-btn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
-.tb-btn.save { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #86efac; }
-.tb-btn.save:hover { background: rgba(34,197,94,0.28); }
-.tb-sep { width: 1px; height: 26px; background: rgba(255,255,255,0.08); }
-.tb-hint { font-size: 10px; color: rgba(255,255,255,0.25); margin-left: auto; }
+#edit-fab:hover { background: #7c3aed; }
+#edit-fab.panel-open { background: #7c3aed; }
+#edit-fab svg { flex-shrink: 0; }
 
 /* ── SIDE PANEL ── */
 #panel {
-  position: fixed; top: 0; right: -390px; width: 370px; height: 100vh;
+  display: none;
+  position: fixed; top: 0; right: 0; width: 370px; height: 100vh;
   background: #110f1a; border-left: 1px solid var(--accent-dim);
-  z-index: 999; transition: right 0.3s; overflow-y: auto; padding: 46px 0 40px;
+  z-index: 9999; overflow-y: auto; padding: 0;
 }
-#panel.open { right: 0; }
+#panel.open { display: block; }
 .ps { padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .ps-title { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 .ps-row { margin-bottom: 12px; }
@@ -73,8 +85,8 @@ body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(-
 .pep.on { display: block; }
 
 /* ── MAIN ── */
-#main { padding-top: 46px; transition: margin-right 0.3s; }
-#main.shifted { margin-right: 370px; }
+#main { padding-top: 0; transition: margin-right 0.3s; }
+/* panel overlays content, no shift needed */
 
 /* ── HEADER ── */
 .hdr {
@@ -82,7 +94,8 @@ body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(-
   border-bottom: 1px solid rgba(200,151,58,0.18);
   background: linear-gradient(180deg, rgba(200,151,58,0.07) 0%, transparent 100%);
 }
-.hdr-logo { width: 82px; height: 82px; border-radius: 50%; overflow: hidden; margin: 0 auto 18px; border: 2px solid var(--gold); box-shadow: 0 0 32px rgba(200,151,58,0.28); }
+.hdr-logo { width: 82px; height: 82px; border-radius: 50%; overflow: hidden; margin: 0 auto 18px; border: 2px solid var(--gold); box-shadow: 0 0 32px rgba(200,151,58,0.28); transition: box-shadow 0.2s, border-color 0.2s; }
+.hdr-logo:hover { border-color: var(--gold-light); box-shadow: 0 0 40px rgba(200,151,58,0.5); }
 .hdr-logo img { width: 100%; height: 100%; object-fit: cover; }
 .hdr-kicker { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 13px; }
 .hdr h1 { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 9px; }
@@ -280,7 +293,7 @@ body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(-
 .strat-sec { padding: 52px 40px; max-width: 920px; margin: 0 auto; border-top: 1px solid rgba(200,151,58,0.12); }
 .pillars { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 6px; }
 .pillar { background: var(--dark3); border: 1px solid rgba(200,151,58,0.1); border-radius: 10px; padding: 20px 18px; }
-.pillar-icon { font-size: 20px; margin-bottom: 10px; display: block; }
+.pillar-icon { display: block; margin-bottom: 12px; line-height: 0; }
 .pillar-title { font-family: 'Playfair Display', serif; font-size: 14px; color: #fff; margin-bottom: 7px; }
 .pillar-text { font-size: 11px; color: var(--text-dim); line-height: 1.6; font-weight: 300; }
 
@@ -425,8 +438,7 @@ input[type=color].ctrl-color {
   .tb-btn { padding: 5px 9px; font-size: 10px; }
 
   /* Panel: full-width slide-in on mobile */
-  #panel { width: 100vw; right: -100vw; }
-  #panel.open { right: 0; }
+  #panel.open { width: 100vw; }
   #main.shifted { margin-right: 0; }
 
   /* Header */
@@ -456,21 +468,11 @@ input[type=color].ctrl-color {
 /* ── MOBILE  ≤ 540px ── */
 @media (max-width: 540px) {
 
-  /* Toolbar: scrollable row on mobile */
-  #toolbar {
-    padding: 6px 10px; gap: 5px;
-    flex-wrap: nowrap; overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  #toolbar::-webkit-scrollbar { display: none; }
-  .tb-sep { display: none; }
-  .tb-btn { padding: 5px 8px; font-size: 10px; flex-shrink: 0; }
-  /* Hide export/import on mobile - use panel instead */
-  #toolbar label.tb-btn { display: none; }
+  /* FAB smaller on mobile */
+  #edit-fab { padding: 11px 7px; font-size: 8px; gap: 5px; }
+  #edit-fab.panel-open { background: #6d28d9; }
 
-  /* Main padding for smaller toolbar */
-  #main { padding-top: 48px; }
+
 
   /* Header */
   .hdr { padding: 36px 18px 32px; }
@@ -519,30 +521,31 @@ input[type=color].ctrl-color {
 </head>
 <body>
 
-<!-- TOOLBAR -->
-<div id="toolbar">
-  <div class="tb-brand">✦ Harmonia Editor</div>
-  <div class="tb-sep"></div>
-  <button class="tb-btn" id="btn-edit" onclick="toggleEdit()">✏️ Edit Text</button>
-  <button class="tb-btn" id="btn-panel" onclick="togglePanel()">📋 Posts & Photos</button>
-  <div class="tb-sep"></div>
-  <button class="tb-btn" id="btn-controls" onclick="toggleControls()">🎛️ Visual Controls</button>
-  <div class="tb-sep"></div>
-  <button class="tb-btn save" onclick="window.print()">🖨️ Export PDF</button>
-  <button class="tb-btn save" id="btn-publish" onclick="publishToClient()">🚀 Publish to client</button>
-  <button class="tb-btn" onclick="openGitSettings()">⚙️ GitHub settings</button>
-  <div class="tb-sep"></div>
-  <button class="tb-btn save" onclick="saveConfig()" title="Save all panel edits to browser storage">💾 Save edits</button>
-  <button class="tb-btn" onclick="exportConfig()" title="Export all panel settings as JSON">📤 Export config</button>
-  <label class="tb-btn" for="import-cfg-inp" title="Import a previously exported config JSON" style="cursor:pointer;">📥 Import config</label>
-  <input type="file" id="import-cfg-inp" accept=".json" style="display:none" onchange="importConfig(this)">
-  <div class="tb-hint">Open panel to edit · Cmd+S saves · Export config to reuse for other clients</div>
+<!-- FLOATING EDIT TAB (right side, no top bar) -->
+<div id="edit-fab" onclick="togglePanel()" title="Open editor panel">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+  <span>Edit</span>
 </div>
+<input type="file" id="import-cfg-inp" accept=".json" style="display:none" onchange="importConfig(this)">
 
 <!-- SIDE PANEL -->
 <div id="panel">
-  <!-- Panel nav hint -->
-  <div style="padding:10px 20px 4px;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;">↓ Scroll to edit all sections</div>
+
+  <!-- Panel header with all actions -->
+  <div style="padding:12px 16px 10px;background:#0d0b14;border-bottom:1px solid rgba(139,92,246,0.15);display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+    <span style="font-family:'Playfair Display',serif;font-size:12px;color:var(--gold-light);font-style:italic;margin-right:4px;flex-shrink:0;">✦ Harmonia Editor</span>
+    <button class="tb-btn" id="btn-edit" onclick="toggleEdit()">✏️ Edit Text</button>
+    <button class="tb-btn" onclick="window.print()">🖨️ PDF</button>
+    <button class="tb-btn" onclick="openGitSettings()">⚙️ GitHub</button>
+    <button class="tb-btn" onclick="exportConfig()">📤 Export</button>
+    <label class="tb-btn" for="import-cfg-inp" style="cursor:pointer;">📥 Import</label>
+    <button class="tb-btn" id="btn-controls" onclick="scrollToControls()">🎛️ Visual</button>
+    <button class="tb-btn save" id="btn-publish" onclick="publishToClient()">🚀 Publish</button>
+    <button class="tb-btn save" onclick="saveConfig()" title="Save · Cmd+S">💾 Save</button>
+  </div>
+
+  <div style="padding:8px 20px 2px;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-transform:uppercase;">↓ Scroll to edit all sections</div>
+
   <div class="ps">
     <div class="ps-title">Logo</div>
     <label class="up-btn" for="ul-logo">📁 Upload new logo</label>
@@ -589,10 +592,6 @@ input[type=color].ctrl-color {
       <img id="prev-beforeShot" class="up-prev">
     </div>
   </div>
-
-
-
-</div>
 
   <div class="ps">
     <div class="ps-title">Posts</div>
@@ -742,13 +741,13 @@ Be in harmony. 🍀</textarea></div>
   <!-- ═══ STRATEGY PILLARS ═══ -->
   <div class="ps">
     <div class="ps-title">🎯 Strategy Pillars</div>
-    <div class="ps-row"><span class="ps-label">Pillar 1 icon</span><input class="ps-input" id="f-p1icon" value="☕" oninput="syncEl(this,['pillar-icon-1'])"></div>
+    
     <div class="ps-row"><span class="ps-label">Pillar 1 title</span><input class="ps-input" id="f-p1ptitle" value="Produkt &amp; Kvalitet" oninput="syncEl(this,['pillar-title-1'])"></div>
     <div class="ps-row"><span class="ps-label">Pillar 1 text</span><textarea class="ps-input" id="f-p1ptext" rows="3" oninput="syncEl(this,['pillar-text-1'])">Bliski kadrovi kafe i zrna koji govore o posvećenosti. Rooster saradnja kao dokaz premium standarda.</textarea></div>
-    <div class="ps-row"><span class="ps-label">Pillar 2 icon</span><input class="ps-input" id="f-p2icon" value="🌿" oninput="syncEl(this,['pillar-icon-2'])"></div>
+    
     <div class="ps-row"><span class="ps-label">Pillar 2 title</span><input class="ps-input" id="f-p2ptitle" value="Emocija &amp; Ambijent" oninput="syncEl(this,['pillar-title-2'])"></div>
     <div class="ps-row"><span class="ps-label">Pillar 2 text</span><textarea class="ps-input" id="f-p2ptext" rows="3" oninput="syncEl(this,['pillar-text-2'])">Citati i moodovi koji stvaraju osećaj — Harmonia nije samo kafa, to je tvoje jutarnje utočište.</textarea></div>
-    <div class="ps-row"><span class="ps-label">Pillar 3 icon</span><input class="ps-input" id="f-p3icon" value="🎯" oninput="syncEl(this,['pillar-icon-3'])"></div>
+    
     <div class="ps-row"><span class="ps-label">Pillar 3 title</span><input class="ps-input" id="f-p3ptitle" value="Promocije &amp; Akcije" oninput="syncEl(this,['pillar-title-3'])"></div>
     <div class="ps-row"><span class="ps-label">Pillar 3 text</span><textarea class="ps-input" id="f-p3ptext" rows="3" oninput="syncEl(this,['pillar-text-3'])">Happy Hour četvrtkom generiše redovne posetioce. Jasna ponuda, pravo vreme, prava publika.</textarea></div>
   </div>
@@ -936,7 +935,13 @@ Be in harmony. 🍀</textarea></div>
 
   <!-- HEADER -->
   <div class="hdr">
-    <div class="hdr-logo"><img id="logo-hdr" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Logo"></div>
+    <div class="hdr-logo" id="hdr-logo-wrap" onclick="document.getElementById('ul-logo').click()" title="Click to upload logo" style="cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;background:#1a1208;">
+  <img id="logo-hdr" src="" alt="Logo" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;">
+  <div id="logo-hdr-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(200,151,58,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    <span style="font-size:7px;color:rgba(200,151,58,0.5);letter-spacing:1px;font-family:'DM Sans',sans-serif;">LOGO</span>
+  </div>
+</div>
     <div class="hdr-kicker" id="hdr-kicker">Social Media Campaign Proposal · 2026</div>
     <h1><span id="hdr-title-main">Harmonia</span> <em id="hdr-title-em">Caffe</em></h1>
     <div class="hdr-sub" id="hdr-sub">Instagram Feed Strategy · Žarkovo, Beograd</div>
@@ -944,9 +949,9 @@ Be in harmony. 🍀</textarea></div>
 
   <!-- BEFORE / AFTER SIDE BY SIDE -->
   <div class="sec">
-    <div class="sec-kicker">Feed Transformation</div>
-    <div class="sec-title">Pre i posle — <em>ista kafa, bolji brend</em></div>
-    <div class="sec-desc">Isti sadržaj, iste fotografije — ali sa konzistentnim vizualnim identitetom koji odmah govori: ovo je premium mesto.</div>
+    <div class="sec-kicker">Pre i posle</div>
+    <div class="sec-title">Kako izgleda <em>uređen profil</em></div>
+    <div class="sec-desc">Levo je trenutni profil. Desno je predlog — iste fotografije, ali složene tako da profil deluje prepoznatljivo i profesionalno.</div>
 
     <div class="side-by-side">
 
@@ -1022,23 +1027,10 @@ Be in harmony. 🍀</textarea></div>
               </div>
               <!-- P2 quote -->
               <div class="ig-cell">
-                <img id="grid-img-2" src="" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:brightness(0.45);">
-                <div class="quote-cell" id="grid-quote-2" style="width:100%;height:100%;position:absolute;inset:0;">
-                  <div class="qc-logo"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>
-                  <div class="qc-text" id="p2-quote-g">"Jutro počinje dobrom kafom."</div>
-                  <div class="qc-line"></div>
-                </div>
+                <img id="grid-img-2" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="ig-cell">
-                <img id="grid-img-3" src="" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:brightness(0.35);">
-                <div class="promo-cell" id="grid-promo-3" style="width:100%;height:100%;position:absolute;inset:0;">
-                  <div class="pc-badge" id="p3-badge-g">Četvrtak akcija</div>
-                  <div class="pc-stars">✦ ✦ ✦</div>
-                  <div class="pc-day">Happy<br><em id="p3-day-g">Hour</em></div>
-                  <div class="pc-divider"></div>
-                  <div class="pc-offer" id="p3-offer-g">Kafa + kisela voda<br>po posebnoj ceni</div>
-                  <div class="pc-time" id="p3-time-g">10:00 – 11:00</div>
-                </div>
+                <img id="grid-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <!-- P4 latte -->
               <div class="ig-cell">
@@ -1054,12 +1046,7 @@ Be in harmony. 🍀</textarea></div>
               </div>
               <!-- P6 quote -->
               <div class="ig-cell">
-                <img id="grid-img-6" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.42) saturate(1.1);">
-                <div class="quote-cell" id="grid-quote-6" style="width:100%;height:100%;position:absolute;inset:0;background:linear-gradient(135deg,#120a02,#241508,#120a02);">
-                  <div class="qc-logo"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>
-                  <div class="qc-text" id="p6-quote-g">"Pronađi svoj mir uz šoljicu kafe."</div>
-                  <div class="qc-line"></div>
-                </div>
+                <img id="grid-img-6" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;">
               </div>
             </div>
           </div>
@@ -1071,9 +1058,9 @@ Be in harmony. 🍀</textarea></div>
 
   <!-- POST CARDS -->
   <div class="cards-sec">
-    <div class="sec-kicker">Post Breakdown</div>
-    <div class="sec-title">6 predloženih <em>objava</em></div>
-    <div class="sec-desc" style="margin-bottom:28px;">Svaka objava ima jasnu ulogu — od emocije i brendinga do promocije i angažmana.</div>
+    <div class="sec-kicker">Predlog objava</div>
+    <div class="sec-title">6 <em>objava</em> za početak</div>
+    <div class="sec-desc" style="margin-bottom:28px;">Ovo je predlog za prvih 6 postova. Svaki ima drugačiji cilj — neke prodaju, neke grade atmosferu, neke pozivaju ljude da dođu.</div>
     <div class="cards-grid">
 
       <!-- Card 1 -->
@@ -1092,17 +1079,12 @@ Be in harmony. 🍀</textarea></div>
 
       <!-- Card 2 -->
       <div class="card">
-        <div class="card-img" style="position:relative;">
-          <img id="card-img-2" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;filter:brightness(0.45) saturate(1.1);">
-          <div class="card-quote" id="card-quote-2">
-            <div class="cq-logo"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>
-            <div class="cq-text" id="p2-quote-c">"Jutro počinje dobrom kafom."</div>
-            <div class="cq-line"></div>
-          </div>
+        <div class="card-img">
+          <img id="card-img-2" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
         </div>
         <div class="card-body">
-          <div class="card-kicker">Quote / Mood · Post 2</div>
-          <div class="card-title" id="p2-title">Počni jutro kako treba.</div>
+          <div class="card-kicker">Foto · Post 2</div>
+          <div class="card-title" id="p2-title">Jutarnja kafa.</div>
           <div class="card-text" id="p2-cap">Nema boljeg načina da počneš dan nego uz šoljicu Harmonia kafe. Dođi, sedi, udahni. 🌿</div>
           <div class="card-tags" id="p2-tags">#jutro #kafa #harmonia #beograd #caffe #dobardan #jutarnjakafa</div>
         </div>
@@ -1110,18 +1092,8 @@ Be in harmony. 🍀</textarea></div>
 
       <!-- Card 3 -->
       <div class="card">
-        <div class="card-img" style="position:relative;">
-          <img id="card-img-3" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;filter:brightness(0.35) saturate(1.1);">
-          <div class="card-promo" id="card-promo-3">
-            <div class="cp-corner tl"></div><div class="cp-corner tr"></div>
-            <div class="cp-corner bl"></div><div class="cp-corner br"></div>
-            <div class="cp-badge" id="p3-badge-c">Četvrtak akcija</div>
-            <div class="cp-stars">✦ ✦ ✦</div>
-            <div class="cp-day">Happy<em id="p3-day-c">Hour</em></div>
-            <div class="cp-divider"></div>
-            <div class="cp-offer"><strong id="p3-offer-c">Kafa + kisela voda</strong><br>po posebnoj ceni</div>
-            <div class="cp-time" id="p3-time-c">10:00 – 11:00</div>
-          </div>
+        <div class="card-img">
+          <img id="card-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
         </div>
         <div class="card-body">
           <div class="card-kicker">Promo · Post 3</div>
@@ -1164,16 +1136,11 @@ Be in harmony. 🍀</textarea></div>
 
       <!-- Card 6 -->
       <div class="card">
-        <div class="card-img" style="position:relative;">
-          <img id="card-img-6" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;filter:brightness(0.45) saturate(1.1);">
-          <div class="card-quote" id="card-quote-6" style="background:linear-gradient(135deg,#120a02,#241508,#120a02);">
-            <div class="cq-logo"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>
-            <div class="cq-text" id="p6-quote-c">"Pronađi svoj mir uz šoljicu kafe."</div>
-            <div class="cq-line"></div>
-          </div>
+        <div class="card-img">
+          <img id="card-img-6" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
         </div>
         <div class="card-body">
-          <div class="card-kicker">Lifestyle · Post 6</div>
+          <div class="card-kicker">Foto · Post 6</div>
           <div class="card-title" id="p6-title">Tvoje mesto za predah.</div>
           <div class="card-text" id="p6-cap">Isključi se na trenutak. Pronađi mir u harmoničnom ambijentu i najkvalitetnijem espresu u Žarkovu. 🌿</div>
           <div class="card-tags" id="p6-tags">#harmonia #mir #jutro #kafa #beograd #espresso #ambijent #žarkovo</div>
@@ -1185,13 +1152,13 @@ Be in harmony. 🍀</textarea></div>
 
   <!-- STRATEGY -->
   <div class="strat-sec">
-    <div class="sec-kicker">Strategija</div>
-    <div class="sec-title">Tri stuba <em>sadržaja</em></div>
-    <div class="sec-desc" style="margin-bottom:24px;">Svaki post ima svoju ulogu. Pravi feed nije samo lep — on prodaje, gradi zajednicu i vraća ljude.</div>
+    <div class="sec-kicker">Plan</div>
+    <div class="sec-title">Šta i zašto <em>objavljujemo</em></div>
+    <div class="sec-desc" style="margin-bottom:24px;">Svaka objava spada u jednu od tri kategorije. To nije slučajno — tako feed ima ritam i svaki post ima smisla.</div>
     <div class="pillars">
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-1">☕</span><div class="pillar-title" id="pillar-title-1">Produkt & Kvalitet</div><div class="pillar-text" id="pillar-text-1">Bliski kadrovi kafe i zrna koji govore o posvećenosti. Rooster saradnja kao dokaz premium standarda.</div></div>
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2">🌿</span><div class="pillar-title" id="pillar-title-2">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2">Citati i moodovi koji stvaraju osećaj — Harmonia nije samo kafa, to je tvoje jutarnje utočište.</div></div>
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-3">🎯</span><div class="pillar-title" id="pillar-title-3">Promocije & Akcije</div><div class="pillar-text" id="pillar-text-3">Happy Hour četvrtkom generiše redovne posetioce. Jasna ponuda, pravo vreme, prava publika.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-1"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></span><div class="pillar-title" id="pillar-title-1">Produkt & Kvalitet</div><div class="pillar-text" id="pillar-text-1">Fotografije kafe, zrna i detalja koji pokazuju šta Harmonia nudi. Saradnja sa Roosterom tu dolazi do izražaja.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><div class="pillar-title" id="pillar-title-2">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2">Kadrovi prostora, svetla i trenutaka koji dočaravaju kako izgleda biti u Harmoniji. Kratki citati koji prate fotografiju.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-3"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pillar-title" id="pillar-title-3">Promocije & Akcije</div><div class="pillar-text" id="pillar-text-3">Happy Hour četvrtkom — konkretna akcija sa jasnom porukom. Ovakve objave direktno dovode ljude u lokal.</div></div>
     </div>
   </div>
 
@@ -1219,15 +1186,13 @@ function toggleEdit() {
 }
 
 function toggleControls() {
+  scrollToControls();
+}
+function scrollToControls() {
   const p = document.getElementById('panel');
-  const m = document.getElementById('main');
-  const b = document.getElementById('btn-controls');
-  const bp = document.getElementById('btn-panel');
+  const fab = document.getElementById('edit-fab');
   p.classList.add('open');
-  m.classList.add('shifted');
-  b.classList.add('on');
-  bp.classList.add('on');
-  // Scroll panel to visual controls
+  if (fab) fab.classList.add('panel-open');
   setTimeout(() => {
     const sec = document.querySelector('.ctrl-section');
     if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1236,11 +1201,9 @@ function toggleControls() {
 
 function togglePanel() {
   const p = document.getElementById('panel');
-  const m = document.getElementById('main');
-  const b = document.getElementById('btn-panel');
-  p.classList.toggle('open');
-  m.classList.toggle('shifted');
-  b.classList.toggle('on', p.classList.contains('open'));
+  const fab = document.getElementById('edit-fab');
+  const isOpen = p.classList.toggle('open');
+  if (fab) fab.classList.toggle('panel-open', isOpen);
 }
 
 function switchTab(btn, n) {
@@ -1425,15 +1388,26 @@ function swapLogo(input) {
 
   compressImageToWebP(file, { maxWidth: 900, maxHeight: 900, startQuality: 0.82, minQuality: 0.50, maxBytes: 90000 })
     .then(({ blob, filename, objectUrl, publicPath }) => {
-      document.querySelectorAll('[id^="logo-"]').forEach(el => { if(el.tagName.toLowerCase()==='img'){ el.src = objectUrl; el.dataset.uploadPath = publicPath; }});
-      document.querySelectorAll('.qc-logo img, .cq-logo img, .ig-pic-wrap img, .ig-avatar img, .ig-hl-ring img').forEach(el => { el.src = objectUrl; el.dataset.uploadPath = publicPath; });
-      const hdr = document.getElementById('logo-hdr');
-      if (hdr) { hdr.src = objectUrl; hdr.dataset.uploadPath = publicPath; }
+      // Update all logo images
+      document.querySelectorAll('[id^="logo-"]').forEach(el => {
+        if (el.tagName.toLowerCase() === 'img') { el.src = objectUrl; el.dataset.uploadPath = publicPath; el.style.display = 'block'; }
+      });
+      document.querySelectorAll('.qc-logo img, .cq-logo img, .ig-pic-wrap img, .ig-avatar img, .ig-hl-ring img').forEach(el => {
+        el.src = objectUrl; el.dataset.uploadPath = publicPath;
+      });
 
+      // Show header logo image, hide empty state
+      const hdr = document.getElementById('logo-hdr');
+      if (hdr) { hdr.src = objectUrl; hdr.style.display = 'block'; hdr.dataset.uploadPath = publicPath; }
+      const empty = document.getElementById('logo-hdr-empty');
+      if (empty) empty.style.display = 'none';
+
+      // Panel preview
       const prev = document.getElementById('prev-logo');
-      if (prev) { prev.src = objectUrl; prev.style.display='block'; prev.dataset.uploadPath = publicPath; }
+      if (prev) { prev.src = objectUrl; prev.style.display = 'block'; prev.dataset.uploadPath = publicPath; }
 
       queueUploadFile(publicPath, blob, filename);
+      typeof showToast === 'function' && showToast('Logo updated ✓');
     })
     .catch(err => {
       console.error(err);
