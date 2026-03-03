@@ -354,6 +354,24 @@ input[type=color].ctrl-color {
 .psel.on { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 .ctrl-tip { font-size: 9px; color: rgba(255,255,255,0.2); line-height: 1.5; margin-top: 4px; font-style: italic; }
+
+/* === Media embeds (video / YouTube) === */
+.card-img, .ig-cell { position: relative; overflow: hidden; }
+.card-img video, .card-img iframe,
+.ig-cell video, .ig-cell iframe,
+.phone-screen video, .phone-screen iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.card-img video, .ig-cell video, .phone-screen video { object-fit: cover; }
+.media-hidden { display:none !important; }
+
+/* Screenshot mode for BEFORE feed */
+.phone-screen.screenshot-mode { padding:0 !important; }
+.phone-screen.screenshot-mode img { width:100%; height:100%; object-fit:cover; display:block; }
+
 </style>
 </head>
 <body>
@@ -380,7 +398,42 @@ input[type=color].ctrl-color {
     <label class="up-btn" for="ul-logo">📁 Upload new logo</label>
     <input type="file" id="ul-logo" accept="image/*" style="display:none" onchange="swapLogo(this)">
     <img id="prev-logo" class="up-prev">
+  
+  <div class="ps">
+    <div class="ps-title">Instagram (Before/After)</div>
+    <div class="ps-row">
+      <label style="display:flex;align-items:center;gap:10px;">
+        <input type="checkbox" id="f-beforeShotOn" onchange="setBeforeScreenshotMode(this.checked)">
+        <span class="ps-label" style="margin:0;">Use BEFORE screenshot (recommended)</span>
+      </label>
+    </div>
+    <div class="ps-row">
+      <label class="up-btn" for="ul-beforeShot">📁 Upload BEFORE feed screenshot</label>
+      <input type="file" id="ul-beforeShot" accept="image/*" style="display:none" onchange="swapBeforeScreenshot(this)">
+      <img id="prev-beforeShot" class="up-prev">
+    </div>
+    <div class="ps-row" style="opacity:.7;font-size:12px;line-height:1.35;">
+      Upload a real Instagram profile screenshot (like the one you sent). It will be shown inside the left phone mock so clients instantly see "before".
+    </div>
   </div>
+
+
+  <div class="ps">
+    <div class="ps-title">All Text (edit everything)</div>
+    <div class="ps-row" style="opacity:.75;font-size:12px;line-height:1.35;">
+      Pick any text element by ID and edit it. Tip: most important texts already have IDs (titles, captions, tags, quotes).
+    </div>
+    <div class="ps-row">
+      <span class="ps-label">Select text block</span>
+      <select class="ps-input" id="allTextSelect" onchange="selectTextBlock(this.value)"></select>
+    </div>
+    <div class="ps-row">
+      <span class="ps-label">Text</span>
+      <textarea class="ps-input" id="allTextValue" rows="4" oninput="updateTextBlock(this.value)"></textarea>
+    </div>
+  </div>
+
+</div>
 
   <div class="ps">
     <div class="ps-title">Posts</div>
@@ -395,6 +448,30 @@ input[type=color].ctrl-color {
 
     <div class="pep on" id="pep1">
       <div class="ps-row"><label class="up-btn" for="ul-p1">📁 Photo for Post 1</label><input type="file" id="ul-p1" accept="image/*" style="display:none" onchange="swapPhoto(this,1)"><img id="prev-p1" class="up-prev"></div>
+      <div class="ps-row">
+        <span class="ps-label">Media type</span>
+        <select class="ps-input" id="f-p1media" onchange="setPostMediaType(1, this.value)">
+          <option value="image">Image</option>
+          <option value="youtube">YouTube (Reel)</option>
+          <option value="video">MP4 video (upload)</option>
+        </select>
+      </div>
+      <div class="ps-row" id="row-p1yt" style="display:none">
+        <span class="ps-label">YouTube URL</span>
+        <input class="ps-input" id="f-p1yt" placeholder="https://www.youtube.com/watch?v=..." oninput="setPostYouTube(1, this.value)">
+      </div>
+      <div class="ps-row" id="row-p1vid" style="display:none">
+        <label class="up-btn" for="ul-v1">📁 Upload MP4 for Post 1</label>
+        <input type="file" id="ul-v1" accept="video/mp4" style="display:none" onchange="swapVideo(this,1)">
+        <div class="ps-hint" style="opacity:.7;font-size:12px;margin-top:6px;">Tip: MP4 under ~15–20MB for best compatibility.</div>
+      </div>
+      <div class="ps-row">
+        <label style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="f-p1overlay" checked onchange="setPostOverlay(1, this.checked)">
+          <span class="ps-label" style="margin:0;">Overlay text ON/OFF</span>
+        </label>
+      </div>
+
       <div class="ps-row"><span class="ps-label">Overlay label</span><input class="ps-input" id="f-p1label" value="Premium" oninput="sync(this,['p1-label-g','p1-label-c'])"></div>
       <div class="ps-row"><span class="ps-label">Title</span><textarea class="ps-input" id="f-p1title" rows="2" oninput="sync(this,['p1-title'])">Zrno po zrno, šoljica po šoljica.</textarea></div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p1cap" rows="3" oninput="sync(this,['p1-cap'])">Mi smo zaljubljenici u kafu. Zato biramo samo Rooster — jer prava kafa počinje od pravog zrna. ☕</textarea></div>
@@ -421,6 +498,30 @@ input[type=color].ctrl-color {
 
     <div class="pep" id="pep4">
       <div class="ps-row"><label class="up-btn" for="ul-p4">📁 Photo for Post 4</label><input type="file" id="ul-p4" accept="image/*" style="display:none" onchange="swapPhoto(this,4)"><img id="prev-p4" class="up-prev"></div>
+      <div class="ps-row">
+        <span class="ps-label">Media type</span>
+        <select class="ps-input" id="f-p4media" onchange="setPostMediaType(4, this.value)">
+          <option value="image">Image</option>
+          <option value="youtube">YouTube (Reel)</option>
+          <option value="video">MP4 video (upload)</option>
+        </select>
+      </div>
+      <div class="ps-row" id="row-p4yt" style="display:none">
+        <span class="ps-label">YouTube URL</span>
+        <input class="ps-input" id="f-p4yt" placeholder="https://www.youtube.com/watch?v=..." oninput="setPostYouTube(4, this.value)">
+      </div>
+      <div class="ps-row" id="row-p4vid" style="display:none">
+        <label class="up-btn" for="ul-v4">📁 Upload MP4 for Post 4</label>
+        <input type="file" id="ul-v4" accept="video/mp4" style="display:none" onchange="swapVideo(this,4)">
+        <div class="ps-hint" style="opacity:.7;font-size:12px;margin-top:6px;">Tip: MP4 under ~15–20MB for best compatibility.</div>
+      </div>
+      <div class="ps-row">
+        <label style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="f-p4overlay" checked onchange="setPostOverlay(4, this.checked)">
+          <span class="ps-label" style="margin:0;">Overlay text ON/OFF</span>
+        </label>
+      </div>
+
       <div class="ps-row"><span class="ps-label">Overlay quote</span><textarea class="ps-input" id="f-p4quote" rows="2" oninput="sync(this,['p4-quote-g','p4-quote-c'])">"Svaka šoljica priča za sebe."</textarea></div>
       <div class="ps-row"><span class="ps-label">Title</span><textarea class="ps-input" id="f-p4title" rows="2" oninput="sync(this,['p4-title'])">Umetnost u šoljici.</textarea></div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p4cap" rows="3" oninput="sync(this,['p4-cap'])">Fokus je uvek na dobroj kafi. Svaka šoljica rađena s pažnjom — za tebe, za tvoj trenutak. ☕🤍</textarea></div>
@@ -429,6 +530,30 @@ input[type=color].ctrl-color {
 
     <div class="pep" id="pep5">
       <div class="ps-row"><label class="up-btn" for="ul-p5">📁 Photo for Post 5</label><input type="file" id="ul-p5" accept="image/*" style="display:none" onchange="swapPhoto(this,5)"><img id="prev-p5" class="up-prev"></div>
+      <div class="ps-row">
+        <span class="ps-label">Media type</span>
+        <select class="ps-input" id="f-p5media" onchange="setPostMediaType(5, this.value)">
+          <option value="image">Image</option>
+          <option value="youtube">YouTube (Reel)</option>
+          <option value="video">MP4 video (upload)</option>
+        </select>
+      </div>
+      <div class="ps-row" id="row-p5yt" style="display:none">
+        <span class="ps-label">YouTube URL</span>
+        <input class="ps-input" id="f-p5yt" placeholder="https://www.youtube.com/watch?v=..." oninput="setPostYouTube(5, this.value)">
+      </div>
+      <div class="ps-row" id="row-p5vid" style="display:none">
+        <label class="up-btn" for="ul-v5">📁 Upload MP4 for Post 5</label>
+        <input type="file" id="ul-v5" accept="video/mp4" style="display:none" onchange="swapVideo(this,5)">
+        <div class="ps-hint" style="opacity:.7;font-size:12px;margin-top:6px;">Tip: MP4 under ~15–20MB for best compatibility.</div>
+      </div>
+      <div class="ps-row">
+        <label style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="f-p5overlay" checked onchange="setPostOverlay(5, this.checked)">
+          <span class="ps-label" style="margin:0;">Overlay text ON/OFF</span>
+        </label>
+      </div>
+
       <div class="ps-row"><span class="ps-label">Overlay label</span><input class="ps-input" id="f-p5label" value="Rooster × Harmonia" oninput="sync(this,['p5-label-g','p5-label-c'])"></div>
       <div class="ps-row"><span class="ps-label">Title</span><textarea class="ps-input" id="f-p5title" rows="2" oninput="sync(this,['p5-title'])">Partneri u ljubavi prema kafi.</textarea></div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p5cap" rows="3" oninput="sync(this,['p5-cap'])">Zajedno sa Rooster kafom širimo ljubav prema vrhunskim zrnima. Zato svaka šoljica kod nas ima karakter. 🫘</textarea></div>
@@ -1658,6 +1783,261 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('[migrate] failed for one image', e);
     }
   });
+});
+
+
+/* ============================
+   Enhanced editing (posts media + overlays + before screenshot)
+   ============================ */
+const __postCfgKey = (n)=>`__p${n}_cfg`;
+function getPostCfg(n){
+  try{ return JSON.parse(localStorage.getItem(__postCfgKey(n))||'{}'); }catch(e){ return {}; }
+}
+function setPostCfg(n, patch){
+  const cur = getPostCfg(n);
+  const next = Object.assign({}, cur, patch);
+  localStorage.setItem(__postCfgKey(n), JSON.stringify(next));
+  applyPostCfg(n);
+}
+
+function applyPostCfg(n){
+  const cfg = getPostCfg(n);
+  const media = cfg.media_type || 'image';
+  const yt = cfg.youtube_url || '';
+  const overlay = (cfg.overlay_enabled !== false); // default true
+
+  // hydrate controls if present
+  const sel = document.getElementById(`f-p${n}media`);
+  if (sel && sel.value !== media) sel.value = media;
+  const rowY = document.getElementById(`row-p${n}yt`);
+  const rowV = document.getElementById(`row-p${n}vid`);
+  if (rowY) rowY.style.display = (media === 'youtube') ? '' : 'none';
+  if (rowV) rowV.style.display = (media === 'video') ? '' : 'none';
+  const ytIn = document.getElementById(`f-p${n}yt`);
+  if (ytIn && ytIn.value !== yt) ytIn.value = yt;
+  const ov = document.getElementById(`f-p${n}overlay`);
+  if (ov) ov.checked = overlay;
+
+  // Apply overlay show/hide (both phone grid + card)
+  const overlayIds = [
+    `p${n}-label-g`,`p${n}-title`, `p${n}-cap`, `p${n}-tags`,
+    `p${n}-label-c`,`p${n}-quote-g`,`p${n}-quote-c`,
+    `p${n}-badge-g`,`p${n}-day-g`,`p${n}-offer-g`,`p${n}-time-g`,
+    `p${n}-badge-c`,`p${n}-day-c`,`p${n}-offer-c`,`p${n}-time-c`,
+  ];
+  overlayIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if (el) el.style.display = overlay ? '' : 'none';
+  });
+
+  // Apply media to card image
+  const imgEl = document.getElementById(`card-img-${n}`);
+  if (!imgEl) return;
+  const host = imgEl.parentElement; // .card-img
+  if (!host) return;
+
+  // Helper to clear host and keep aspect
+  const curNode = host.querySelector('img,video,iframe');
+  const curTag = curNode ? curNode.tagName.toLowerCase() : null;
+
+  if (media === 'youtube' && yt){
+    // replace with iframe
+    if (curTag !== 'iframe'){
+      host.innerHTML = '';
+      const iframe = document.createElement('iframe');
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      iframe.loading = "lazy";
+      host.appendChild(iframe);
+    }
+    const iframe = host.querySelector('iframe');
+    iframe.src = youtubeToEmbed(yt);
+    return;
+  }
+
+  if (media === 'video' && cfg.video_src){
+    if (curTag !== 'video'){
+      host.innerHTML = '';
+      const v = document.createElement('video');
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = "metadata";
+      // Don't autoplay; user click -> sound allowed
+      host.appendChild(v);
+    }
+    host.querySelector('video').src = cfg.video_src;
+    return;
+  }
+
+  // default: image
+  if (curTag !== 'img'){
+    host.innerHTML = '';
+    const img = document.createElement('img');
+    img.id = `card-img-${n}`; // keep id for other code
+    host.appendChild(img);
+  }
+  const img = host.querySelector('img');
+  // if we previously had swapped photo, keep existing src
+  // (sync with existing preview if any)
+  if (cfg.image_src) img.src = cfg.image_src;
+}
+
+function setPostMediaType(n, v){
+  setPostCfg(n, { media_type: v });
+}
+function setPostYouTube(n, url){
+  setPostCfg(n, { youtube_url: url, media_type: 'youtube' });
+}
+function setPostOverlay(n, enabled){
+  setPostCfg(n, { overlay_enabled: !!enabled });
+}
+
+function youtubeToEmbed(url){
+  try{
+    const u = new URL(url);
+    // youtu.be/<id>
+    if (u.hostname.includes('youtu.be')){
+      const id = u.pathname.replace('/','');
+      return `https://www.youtube-nocookie.com/embed/${id}`;
+    }
+    // youtube.com/watch?v=<id>
+    const v = u.searchParams.get('v');
+    if (v) return `https://www.youtube-nocookie.com/embed/${v}`;
+    // shorts/<id>
+    const m = u.pathname.match(/\/shorts\/([^\/]+)/);
+    if (m && m[1]) return `https://www.youtube-nocookie.com/embed/${m[1]}`;
+  }catch(e){}
+  return url; // fallback
+}
+
+// MP4 upload for a post
+async function swapVideo(inp, n){
+  const file = inp.files && inp.files[0];
+  if (!file) return;
+  // Use object URL for immediate preview
+  const url = URL.createObjectURL(file);
+  setPostCfg(n, { media_type:'video', video_src: url });
+
+  // Keep a reference in pending uploads map if publish pipeline supports it
+  window.__pendingUploads = window.__pendingUploads || {};
+  window.__pendingUploads[`post${n}_video`] = file;
+  toast && toast('Video added (preview). Publish to upload to client repo.');
+}
+
+// BEFORE screenshot mode
+const __beforeKey = '__before_screenshot';
+function getBeforeCfg(){
+  try{ return JSON.parse(localStorage.getItem(__beforeKey)||'{}'); }catch(e){ return {}; }
+}
+function setBeforeCfg(patch){
+  const cur=getBeforeCfg();
+  const next=Object.assign({},cur,patch);
+  localStorage.setItem(__beforeKey, JSON.stringify(next));
+  applyBeforeCfg();
+}
+function setBeforeScreenshotMode(on){
+  setBeforeCfg({ enabled: !!on });
+}
+async function swapBeforeScreenshot(inp){
+  const file=inp.files && inp.files[0];
+  if (!file) return;
+  // preview
+  const url = URL.createObjectURL(file);
+  setBeforeCfg({ enabled:true, src:url });
+
+  const prev=document.getElementById('prev-beforeShot');
+  if (prev) prev.src=url;
+
+  window.__pendingUploads = window.__pendingUploads || {};
+  window.__pendingUploads['before_screenshot'] = file;
+  toast && toast('Before screenshot set (preview). Publish to upload to client repo.');
+}
+
+function applyBeforeCfg(){
+  const cfg=getBeforeCfg();
+  const cb=document.getElementById('f-beforeShotOn');
+  if (cb) cb.checked = !!cfg.enabled;
+  const prev=document.getElementById('prev-beforeShot');
+  if (prev && cfg.src) prev.src = cfg.src;
+
+  // Left phone is first .phone-wrap inside .side-by-side
+  const sbs=document.querySelector('.side-by-side');
+  if (!sbs) return;
+  const wraps=sbs.querySelectorAll('.phone-wrap');
+  if (!wraps || wraps.length<1) return;
+  const beforeScreen = wraps[0].querySelector('.phone-screen');
+  if (!beforeScreen) return;
+
+  if (cfg.enabled && cfg.src){
+    beforeScreen.classList.add('screenshot-mode');
+    beforeScreen.innerHTML = `<img alt="Instagram before screenshot" src="${cfg.src}">`;
+  } else {
+    // If disabled, reload page to restore original mock
+    // (safer than trying to reconstruct original DOM)
+    // Only reload if we had screenshot-mode before
+    if (beforeScreen.classList.contains('screenshot-mode')){
+      location.reload();
+    }
+  }
+}
+
+// Boot: apply saved configs
+document.addEventListener('DOMContentLoaded', ()=>{
+  try{
+    for (let n=1;n<=6;n++) applyPostCfg(n);
+    applyBeforeCfg();
+  }catch(e){ console.warn(e); }
+});
+
+
+/* ============================
+   All Text editor (by element IDs)
+   ============================ */
+const __textMapKey='__text_map';
+function getTextMap(){ try{ return JSON.parse(localStorage.getItem(__textMapKey)||'{}'); }catch(e){ return {}; } }
+function setTextMap(map){ localStorage.setItem(__textMapKey, JSON.stringify(map||{})); }
+let __selectedTextId=null;
+
+function buildTextBlockList(){
+  const sel=document.getElementById('allTextSelect');
+  if (!sel) return;
+  const map=getTextMap();
+  // gather ids with visible text
+  const els=[...document.querySelectorAll('[id]')].filter(el=>{
+    if (!el || !el.id) return false;
+    if (el.closest('#panel') || el.closest('#toolbar')) return false;
+    const t=(el.innerText||'').trim();
+    return t.length>0 && t.length<2000;
+  });
+  els.sort((a,b)=>a.id.localeCompare(b.id));
+  sel.innerHTML = '<option value="">-- choose --</option>' + els.map(el=>`<option value="${el.id}">${el.id}</option>`).join('');
+  // apply stored texts
+  Object.keys(map).forEach(id=>{
+    const el=document.getElementById(id);
+    if (el) el.innerText = map[id];
+  });
+}
+
+function selectTextBlock(id){
+  __selectedTextId=id||null;
+  const ta=document.getElementById('allTextValue');
+  if (!ta) return;
+  if (!id){ ta.value=''; return; }
+  const el=document.getElementById(id);
+  ta.value = el ? (el.innerText||'') : '';
+}
+function updateTextBlock(val){
+  if (!__selectedTextId) return;
+  const el=document.getElementById(__selectedTextId);
+  if (el) el.innerText = val;
+  const map=getTextMap();
+  map[__selectedTextId]=val;
+  setTextMap(map);
+  // keep preview in sync for any linked elements already handled by sync()
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  try{ buildTextBlockList(); }catch(e){}
 });
 
 </script>
