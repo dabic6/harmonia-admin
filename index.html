@@ -2161,7 +2161,11 @@ function getPostCfg(n){
 function setPostCfg(n, patch){
   const cur = getPostCfg(n);
   const next = Object.assign({}, cur, patch);
-  localStorage.setItem(__postCfgKey(n), JSON.stringify(next));
+  // Don't persist blob: URLs — they die on reload
+  const toStore = Object.assign({}, next);
+  if (toStore.image_src && toStore.image_src.startsWith('blob:')) delete toStore.image_src;
+  if (toStore.video_src && toStore.video_src.startsWith('blob:')) delete toStore.video_src;
+  localStorage.setItem(__postCfgKey(n), JSON.stringify(toStore));
   applyPostCfg(n);
 }
 
@@ -2365,7 +2369,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', ()=>{
   try{
     for (let n=1;n<=6;n++) applyPostCfg(n);
-    applyBeforeCfg();
+    // Restore before screenshot from localStorage (stored as base64)
+    try {
+      const saved = localStorage.getItem('__before_screenshot');
+      if (saved && saved.startsWith('data:')) applyBeforeScreenshot(saved);
+    } catch(e) {}
   }catch(e){ console.warn(e); }
 });
 
