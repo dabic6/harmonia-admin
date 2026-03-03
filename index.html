@@ -687,6 +687,12 @@ input[type=color].ctrl-color {
       <div class="ps-row"><span class="ps-label">Event name</span><input class="ps-input" id="f-p3day" value="Happy Hour" oninput="sync(this,['p3-day-g','p3-day-c'])"></div>
       <div class="ps-row"><span class="ps-label">Offer</span><textarea class="ps-input" id="f-p3offer" rows="2" oninput="sync(this,['p3-offer-g','p3-offer-c'])">Kafa + kisela voda po posebnoj ceni</textarea></div>
       <div class="ps-row"><span class="ps-label">Time</span><input class="ps-input" id="f-p3time" value="10:00 – 11:00" oninput="sync(this,['p3-time-g','p3-time-c'])"></div>
+      <div class="ps-row">
+        <label style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="f-p3overlay" checked onchange="setPostOverlay(3, this.checked)">
+          <span class="ps-label" style="margin:0;">Show promo overlay</span>
+        </label>
+      </div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p3cap" rows="3" oninput="sync(this,['p3-cap'])">Svaki četvrtak od 10 do 11h — kafa + kisela voda po akcijskoj ceni. Rezerviši svoje mesto. 🕙</textarea></div>
       <div class="ps-row"><span class="ps-label">Hashtags</span><textarea class="ps-input" id="f-p3tags" rows="2" oninput="sync(this,['p3-tags'])">#happyhour #harmonia #akcija #kafa #beograd #četvrtak #espresso</textarea></div>
     </div>
@@ -996,9 +1002,9 @@ Be in harmony. 🍀</textarea></div>
     <span style="font-size:7px;color:rgba(200,151,58,0.5);letter-spacing:1px;font-family:'DM Sans',sans-serif;">LOGO</span>
   </div>
 </div>
-    <div class="hdr-kicker" id="hdr-kicker">Social Media Campaign Proposal · 2026</div>
-    <h1><span id="hdr-title-main">Harmonia</span> <em id="hdr-title-em">Caffe</em></h1>
-    <div class="hdr-sub" id="hdr-sub">Instagram Feed Strategy · Žarkovo, Beograd</div>
+    <div class="hdr-kicker" id="hdr-kicker" contenteditable="false">Social Media Campaign Proposal · 2026</div>
+    <h1><span id="hdr-title-main" contenteditable="false">Harmonia</span> <em id="hdr-title-em" contenteditable="false">Caffe</em></h1>
+    <div class="hdr-sub" id="hdr-sub" contenteditable="false">Instagram Feed Strategy · Žarkovo, Beograd</div>
   </div>
 
   <!-- BEFORE / AFTER SIDE BY SIDE -->
@@ -1077,26 +1083,33 @@ Be in harmony. 🍀</textarea></div>
               <div class="ig-cell">
                 <img id="grid-img-1" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="filter:brightness(0.82) saturate(1.25) contrast(1.08);">
                 <div class="ov-dark"></div>
-                <div class="ov-text"><div class="ov-tag" id="p1-label-g">Premium</div></div>
+                <div class="ov-text"><div class="ov-tag" id="p1-label-g" contenteditable="false">Premium</div></div>
               </div>
               <!-- P2 quote -->
               <div class="ig-cell">
                 <img id="grid-img-2" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;">
               </div>
               <div class="ig-cell">
-                <img id="grid-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;">
+                <img id="grid-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="display:block;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:brightness(0.35);">
+                <div class="promo-cell" id="grid-promo-3" style="width:100%;height:100%;position:absolute;inset:0;">
+                  <div class="pc-badge" id="p3-badge-g" contenteditable="false">Četvrtak akcija</div>
+                  <div class="pc-stars">✦ ✦ ✦</div>
+                  <div class="pc-day">Happy<br><em id="p3-day-g" contenteditable="false">Hour</em></div>
+                  <div class="pc-offer" id="p3-offer-g" contenteditable="false">Kafa + kisela voda</div>
+                  <div class="pc-time" id="p3-time-g" contenteditable="false">10:00 – 11:00</div>
+                </div>
               </div>
               <!-- P4 latte -->
               <div class="ig-cell">
                 <img id="grid-img-4" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="filter:brightness(0.75) saturate(1.1) contrast(1.05);">
                 <div class="ov-dark"></div>
-                <div class="ov-text"><div class="ov-quote" id="p4-quote-g">"Svaka šoljica priča za sebe."</div></div>
+                <div class="ov-text"><div class="ov-quote" id="p4-quote-g" contenteditable="false">"Svaka šoljica priča za sebe."</div></div>
               </div>
               <!-- P5 coffee -->
               <div class="ig-cell">
                 <img id="grid-img-5" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="object-position:center 60%;filter:brightness(0.78) saturate(1.3) contrast(1.1);">
                 <div class="ov-dark"></div>
-                <div class="ov-text"><div class="ov-tag" id="p5-label-g">Rooster × Harmonia</div></div>
+                <div class="ov-text"><div class="ov-tag" id="p5-label-g" contenteditable="false">Rooster × Harmonia</div></div>
               </div>
               <!-- P6 quote -->
               <div class="ig-cell">
@@ -1121,13 +1134,13 @@ Be in harmony. 🍀</textarea></div>
       <div class="card">
         <div class="card-img">
           <img id="card-img-1" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="filter:brightness(0.82) saturate(1.25) contrast(1.08);">
-          <div class="card-coffee-ov"><div class="cc-label" id="p1-label-c">Premium</div></div>
+          <div class="card-coffee-ov"><div class="cc-label" id="p1-label-c" contenteditable="false">Premium</div></div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Coffee Close-Up · Post 1</div>
-          <div class="card-title" id="p1-title">Zrno po zrno, šoljica po šoljica.</div>
-          <div class="card-text" id="p1-cap">Mi smo zaljubljenici u kafu. Zato biramo samo Rooster — jer prava kafa počinje od pravog zrna. ☕</div>
-          <div class="card-tags" id="p1-tags">#harmonia #kafa #beograd #premiumkafa #rooster #coffeelovers #žarkovo</div>
+          <div class="card-title" id="p1-title" contenteditable="false">Zrno po zrno, šoljica po šoljica.</div>
+          <div class="card-text" id="p1-cap" contenteditable="false">Mi smo zaljubljenici u kafu. Zato biramo samo Rooster — jer prava kafa počinje od pravog zrna. ☕</div>
+          <div class="card-tags" id="p1-tags" contenteditable="false">#harmonia #kafa #beograd #premiumkafa #rooster #coffeelovers #žarkovo</div>
         </div>
       </div>
 
@@ -1138,22 +1151,32 @@ Be in harmony. 🍀</textarea></div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Foto · Post 2</div>
-          <div class="card-title" id="p2-title">Jutarnja kafa.</div>
-          <div class="card-text" id="p2-cap">Nema boljeg načina da počneš dan nego uz šoljicu Harmonia kafe. Dođi, sedi, udahni. 🌿</div>
-          <div class="card-tags" id="p2-tags">#jutro #kafa #harmonia #beograd #caffe #dobardan #jutarnjakafa</div>
+          <div class="card-title" id="p2-title" contenteditable="false">Jutarnja kafa.</div>
+          <div class="card-text" id="p2-cap" contenteditable="false">Nema boljeg načina da počneš dan nego uz šoljicu Harmonia kafe. Dođi, sedi, udahni. 🌿</div>
+          <div class="card-tags" id="p2-tags" contenteditable="false">#jutro #kafa #harmonia #beograd #caffe #dobardan #jutarnjakafa</div>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="card">
-        <div class="card-img">
-          <img id="card-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+        <div class="card-img" style="position:relative;">
+          <img id="card-img-3" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:brightness(0.35);">
+          <div class="card-promo" id="card-promo-3">
+            <div class="cp-corner tl"></div><div class="cp-corner tr"></div>
+            <div class="cp-corner bl"></div><div class="cp-corner br"></div>
+            <div class="cp-badge" id="p3-badge-c" contenteditable="false">Četvrtak akcija</div>
+            <div class="cp-stars">✦ ✦ ✦</div>
+            <div class="cp-day">Happy<em id="p3-day-c" contenteditable="false"> Hour</em></div>
+            <div class="cp-divider"></div>
+            <div class="cp-offer"><strong id="p3-offer-c">Kafa + kisela voda</strong><br>po posebnoj ceni</div>
+            <div class="cp-time" id="p3-time-c" contenteditable="false">10:00 – 11:00</div>
+          </div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Promo · Post 3</div>
           <div class="card-title">Četvrtkom je posebno ✨</div>
-          <div class="card-text" id="p3-cap">Svaki četvrtak od 10 do 11h — kafa + kisela voda po akcijskoj ceni. Rezerviši svoje mesto. 🕙</div>
-          <div class="card-tags" id="p3-tags">#happyhour #harmonia #akcija #kafa #beograd #četvrtak #espresso</div>
+          <div class="card-text" id="p3-cap" contenteditable="false">Svaki četvrtak od 10 do 11h — kafa + kisela voda po akcijskoj ceni. Rezerviši svoje mesto. 🕙</div>
+          <div class="card-tags" id="p3-tags" contenteditable="false">#happyhour #harmonia #akcija #kafa #beograd #četvrtak #espresso</div>
         </div>
       </div>
 
@@ -1162,15 +1185,15 @@ Be in harmony. 🍀</textarea></div>
         <div class="card-img">
           <img id="card-img-4" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="filter:brightness(0.75) saturate(1.1) contrast(1.05);">
           <div class="card-morning-ov">
-            <div class="cm-text" id="p4-quote-c">"Svaka šoljica priča za sebe."</div>
+            <div class="cm-text" id="p4-quote-c" contenteditable="false">"Svaka šoljica priča za sebe."</div>
             <div class="cm-tag">harmonia_caffe</div>
           </div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Latte Art · Post 4</div>
-          <div class="card-title" id="p4-title">Umetnost u šoljici.</div>
-          <div class="card-text" id="p4-cap">Fokus je uvek na dobroj kafi. Svaka šoljica rađena s pažnjom — za tebe, za tvoj trenutak. ☕🤍</div>
-          <div class="card-tags" id="p4-tags">#latteart #harmonia #kafa #beograd #goodcoffee #premiumcoffee #coffeevibes</div>
+          <div class="card-title" id="p4-title" contenteditable="false">Umetnost u šoljici.</div>
+          <div class="card-text" id="p4-cap" contenteditable="false">Fokus je uvek na dobroj kafi. Svaka šoljica rađena s pažnjom — za tebe, za tvoj trenutak. ☕🤍</div>
+          <div class="card-tags" id="p4-tags" contenteditable="false">#latteart #harmonia #kafa #beograd #goodcoffee #premiumcoffee #coffeevibes</div>
         </div>
       </div>
 
@@ -1178,13 +1201,13 @@ Be in harmony. 🍀</textarea></div>
       <div class="card">
         <div class="card-img">
           <img id="card-img-5" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="filter:brightness(0.78) saturate(1.3) contrast(1.1);">
-          <div class="card-coffee-ov"><div class="cc-label" id="p5-label-c">Rooster × Harmonia</div></div>
+          <div class="card-coffee-ov"><div class="cc-label" id="p5-label-c" contenteditable="false">Rooster × Harmonia</div></div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Brand Story · Post 5</div>
-          <div class="card-title" id="p5-title">Partneri u ljubavi prema kafi.</div>
-          <div class="card-text" id="p5-cap">Zajedno sa Rooster kafom širimo ljubav prema vrhunskim zrnima. Zato svaka šoljica kod nas ima karakter. 🫘</div>
-          <div class="card-tags" id="p5-tags">#rooster #harmonia #specialty #kafa #beogradskakafa #singleorigin</div>
+          <div class="card-title" id="p5-title" contenteditable="false">Partneri u ljubavi prema kafi.</div>
+          <div class="card-text" id="p5-cap" contenteditable="false">Zajedno sa Rooster kafom širimo ljubav prema vrhunskim zrnima. Zato svaka šoljica kod nas ima karakter. 🫘</div>
+          <div class="card-tags" id="p5-tags" contenteditable="false">#rooster #harmonia #specialty #kafa #beogradskakafa #singleorigin</div>
         </div>
       </div>
 
@@ -1195,9 +1218,9 @@ Be in harmony. 🍀</textarea></div>
         </div>
         <div class="card-body">
           <div class="card-kicker">Foto · Post 6</div>
-          <div class="card-title" id="p6-title">Tvoje mesto za predah.</div>
-          <div class="card-text" id="p6-cap">Isključi se na trenutak. Pronađi mir u harmoničnom ambijentu i najkvalitetnijem espresu u Žarkovu. 🌿</div>
-          <div class="card-tags" id="p6-tags">#harmonia #mir #jutro #kafa #beograd #espresso #ambijent #žarkovo</div>
+          <div class="card-title" id="p6-title" contenteditable="false">Tvoje mesto za predah.</div>
+          <div class="card-text" id="p6-cap" contenteditable="false">Isključi se na trenutak. Pronađi mir u harmoničnom ambijentu i najkvalitetnijem espresu u Žarkovu. 🌿</div>
+          <div class="card-tags" id="p6-tags" contenteditable="false">#harmonia #mir #jutro #kafa #beograd #espresso #ambijent #žarkovo</div>
         </div>
       </div>
 
@@ -1210,17 +1233,17 @@ Be in harmony. 🍀</textarea></div>
     <div class="sec-title">Šta i zašto <em>objavljujemo</em></div>
     <div class="sec-desc" style="margin-bottom:24px;">Svaka objava spada u jednu od tri kategorije. To nije slučajno — tako feed ima ritam i svaki post ima smisla.</div>
     <div class="pillars">
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-1"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></span><div class="pillar-title" id="pillar-title-1">Produkt & Kvalitet</div><div class="pillar-text" id="pillar-text-1">Fotografije kafe, zrna i detalja koji pokazuju šta Harmonia nudi. Saradnja sa Roosterom tu dolazi do izražaja.</div></div>
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><div class="pillar-title" id="pillar-title-2">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2">Kadrovi prostora, svetla i trenutaka koji pokazuju kako izgleda biti u Harmoniji — ambijent koji govori sam za sebe.</div></div>
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-3"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pillar-title" id="pillar-title-3">Promocije & Akcije</div><div class="pillar-text" id="pillar-text-3">Happy Hour četvrtkom — konkretna akcija sa jasnom porukom. Ovakve objave direktno dovode ljude u lokal.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-1"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></span><div class="pillar-title" id="pillar-title-1" contenteditable="false">Produkt & Kvalitet</div><div class="pillar-text" id="pillar-text-1" contenteditable="false">Fotografije kafe, zrna i detalja koji pokazuju šta Harmonia nudi. Saradnja sa Roosterom tu dolazi do izražaja.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><div class="pillar-title" id="pillar-title-2" contenteditable="false">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2" contenteditable="false">Kadrovi prostora, svetla i trenutaka koji pokazuju kako izgleda biti u Harmoniji — ambijent koji govori sam za sebe.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-3"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pillar-title" id="pillar-title-3" contenteditable="false">Promocije & Akcije</div><div class="pillar-text" id="pillar-text-3" contenteditable="false">Happy Hour četvrtkom — konkretna akcija sa jasnom porukom. Ovakve objave direktno dovode ljude u lokal.</div></div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="ftr">
     <div class="ftr-logo"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>
-    <div class="ftr-name" id="ftr-brand-name">Harmonia Caffe</div>
-    <div class="ftr-sub" id="ftr-brand-sub">Premium Coffee · Žarkovo, Beograd · @harmonia_caffe</div>
+    <div class="ftr-name" id="ftr-brand-name" contenteditable="false">Harmonia Caffe</div>
+    <div class="ftr-sub" id="ftr-brand-sub" contenteditable="false">Premium Coffee · Žarkovo, Beograd · @harmonia_caffe</div>
   </div>
 
 </div>
@@ -1236,7 +1259,22 @@ function toggleEdit() {
   document.getElementById('edit-pill').classList.toggle('show', editOn);
   document.querySelectorAll('[contenteditable]').forEach(el => {
     el.contentEditable = editOn ? 'true' : 'false';
+    if (editOn) {
+      el.style.outline = '1px dashed rgba(139,92,246,0.5)';
+      el.style.cursor = 'text';
+      el.style.borderRadius = '3px';
+      // Sync back to panel on input
+      el.oninput = () => {
+        const panelInput = document.getElementById('f-' + el.id);
+        if (panelInput) panelInput.value = el.innerText;
+      };
+    } else {
+      el.style.outline = '';
+      el.style.cursor = '';
+      el.oninput = null;
+    }
   });
+  if (editOn) typeof showToast === 'function' && showToast('Click any text to edit it directly');
 }
 
 function toggleControls() {
@@ -2204,16 +2242,25 @@ function applyPostCfg(n){
   if (ov) ov.checked = overlay;
 
   // Apply overlay show/hide (both phone grid + card)
-  const overlayIds = [
-    `p${n}-label-g`,`p${n}-title`, `p${n}-cap`, `p${n}-tags`,
-    `p${n}-label-c`,`p${n}-quote-g`,`p${n}-quote-c`,
-    `p${n}-badge-g`,`p${n}-day-g`,`p${n}-offer-g`,`p${n}-time-g`,
-    `p${n}-badge-c`,`p${n}-day-c`,`p${n}-offer-c`,`p${n}-time-c`,
-  ];
-  overlayIds.forEach(id=>{
-    const el=document.getElementById(id);
-    if (el) el.style.display = overlay ? '' : 'none';
-  });
+  // For post 3 (promo), toggle the whole overlay div
+  // For others, toggle individual text elements
+  if (n === 3) {
+    const cardPromo = document.getElementById('card-promo-3');
+    const gridPromo = document.getElementById('grid-promo-3');
+    if (cardPromo) cardPromo.style.display = overlay ? '' : 'none';
+    if (gridPromo) gridPromo.style.display = overlay ? '' : 'none';
+  } else {
+    const overlayIds = [
+      `p${n}-label-g`,`p${n}-title`, `p${n}-cap`, `p${n}-tags`,
+      `p${n}-label-c`,`p${n}-quote-g`,`p${n}-quote-c`,
+      `p${n}-badge-g`,`p${n}-day-g`,`p${n}-offer-g`,`p${n}-time-g`,
+      `p${n}-badge-c`,`p${n}-day-c`,`p${n}-offer-c`,`p${n}-time-c`,
+    ];
+    overlayIds.forEach(id=>{
+      const el=document.getElementById(id);
+      if (el) el.style.display = overlay ? '' : 'none';
+    });
+  }
 
   // Apply media to BOTH the card (.card-img) and the phone grid (.ig-cell)
   const hosts = [];
@@ -2347,14 +2394,10 @@ function applyVideoToPost(n, url) {
     if (!el) return;
     const host = el.parentElement;
 
-    // Remove old element
     el.remove();
-
-    // Remove any existing reel indicator
     const oldIndicator = host.querySelector('.reel-indicator');
     if (oldIndicator) oldIndicator.remove();
 
-    // Create video — show full reel uncropped (9:16 ratio)
     const v = document.createElement('video');
     v.id = (isCard ? 'card-img-' : 'grid-img-') + n;
     v.src = url;
@@ -2362,21 +2405,30 @@ function applyVideoToPost(n, url) {
     v.muted = true;
     v.loop = true;
     v.playsInline = true;
-    v.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;background:#000;';
     v.addEventListener('click', () => { v.muted = !v.muted; });
 
-    // Switch container to 9:16 aspect ratio so full reel is visible
-    host.style.aspectRatio = '9/16';
-    host.style.background = '#000';
+    if (isCard) {
+      // Card: 9:16 full reel, uncropped
+      v.style.cssText = 'width:100%;display:block;object-fit:contain;background:#000;';
+      host.style.aspectRatio = '9/16';
+      host.style.background = '#000';
+    } else {
+      // Grid (phone): stays 1:1, cover crop like Instagram feed thumbnail
+      v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+      host.style.aspectRatio = '1';  // keep square
+      host.style.background = '#000';
+    }
 
     host.insertBefore(v, host.firstChild);
 
-    // Add reel icon (top-right, like Instagram)
-    const indicator = document.createElement('div');
-    indicator.className = 'reel-indicator';
-    indicator.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14-5-3 5-3v6z"/></svg>';
-    indicator.style.cssText = 'position:absolute;top:6px;right:6px;z-index:10;opacity:0.9;pointer-events:none;';
-    host.appendChild(indicator);
+    // Reel indicator on grid only (like Instagram)
+    if (!isCard) {
+      const indicator = document.createElement('div');
+      indicator.className = 'reel-indicator';
+      indicator.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14-5-3 5-3v6z"/></svg>';
+      indicator.style.cssText = 'position:absolute;top:6px;right:6px;z-index:10;opacity:0.9;pointer-events:none;';
+      host.appendChild(indicator);
+    }
   });
 }
 
