@@ -174,7 +174,7 @@ body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(-
 .ig-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: #f0f0f0; }
 .ig-cell { aspect-ratio: 1; position: relative; overflow: hidden; }
 .ig-cell img, .ig-cell video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ig-cell video { position: absolute; inset: 0; }
+.ig-cell video { position: relative; }
 
 /* Post overlays */
 .ov-dark { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,0.65) 100%); }
@@ -217,7 +217,7 @@ body { background: var(--dark); font-family: 'DM Sans', sans-serif; color: var(-
 .card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.5); }
 .card-img { width: 100%; aspect-ratio: 1; overflow: hidden; position: relative; }
 .card-img img { width: 100%; height: 100%; object-fit: cover; display: block;}
-.card-img video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card-img video { width: 100%; display: block; object-fit: contain; background: #000; }
 .card-body { padding: 16px 18px 18px; }
 .card-kicker { font-size: 8.5px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
 .card-title { font-family: 'Playfair Display', serif; font-size: 15px; color: #fff; margin-bottom: 7px; line-height: 1.3; }
@@ -2354,7 +2354,7 @@ function applyVideoToPost(n, url) {
     const oldIndicator = host.querySelector('.reel-indicator');
     if (oldIndicator) oldIndicator.remove();
 
-    // Create video — fills container like Instagram reel thumbnail
+    // Create video — show full reel uncropped (9:16 ratio)
     const v = document.createElement('video');
     v.id = (isCard ? 'card-img-' : 'grid-img-') + n;
     v.src = url;
@@ -2362,9 +2362,13 @@ function applyVideoToPost(n, url) {
     v.muted = true;
     v.loop = true;
     v.playsInline = true;
-    // No controls — clean Instagram look. User can unmute by clicking.
-    v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+    v.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;background:#000;';
     v.addEventListener('click', () => { v.muted = !v.muted; });
+
+    // Switch container to 9:16 aspect ratio so full reel is visible
+    host.style.aspectRatio = '9/16';
+    host.style.background = '#000';
+
     host.insertBefore(v, host.firstChild);
 
     // Add reel icon (top-right, like Instagram)
