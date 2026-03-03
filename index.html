@@ -447,7 +447,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep on" id="pep1">
-      <div class="ps-row"><label class="up-btn" for="ul-p1">📁 Photo for Post 1</label><input type="file" id="ul-p1" accept="image/*" style="display:none" onchange="swapPhoto(this,1)"><img id="prev-p1" class="up-prev"></div>
+      <div class="ps-row" id="row-p1img"><label class="up-btn" for="ul-p1">📁 Photo for Post 1</label><input type="file" id="ul-p1" accept="image/*" style="display:none" onchange="swapPhoto(this,1)"><img id="prev-p1" class="up-prev"></div>
       <div class="ps-row">
         <span class="ps-label">Media type</span>
         <select class="ps-input" id="f-p1media" onchange="setPostMediaType(1, this.value)">
@@ -479,7 +479,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep" id="pep2">
-      <div class="ps-row"><label class="up-btn" for="ul-p2">📁 Upload photo for Post 2</label><input type="file" id="ul-p2" accept="image/*" style="display:none" onchange="swapPhoto(this,2)"><img id="prev-p2" class="up-prev"></div>
+      <div class="ps-row" id="row-p2img"><label class="up-btn" for="ul-p2">📁 Upload photo for Post 2</label><input type="file" id="ul-p2" accept="image/*" style="display:none" onchange="swapPhoto(this,2)"><img id="prev-p2" class="up-prev"></div>
       <div class="ps-row"><span class="ps-label">Quote (in grid & card)</span><textarea class="ps-input" id="f-p2quote" rows="2" oninput="sync(this,['p2-quote-g','p2-quote-c'])">"Jutro počinje dobrom kafom."</textarea></div>
       <div class="ps-row"><span class="ps-label">Title</span><textarea class="ps-input" id="f-p2title" rows="2" oninput="sync(this,['p2-title'])">Počni jutro kako treba.</textarea></div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p2cap" rows="3" oninput="sync(this,['p2-cap'])">Nema boljeg načina da počneš dan nego uz šoljicu Harmonia kafe. Dođi, sedi, udahni. 🌿</textarea></div>
@@ -487,7 +487,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep" id="pep3">
-      <div class="ps-row"><label class="up-btn" for="ul-p3">📁 Upload photo for Post 3</label><input type="file" id="ul-p3" accept="image/*" style="display:none" onchange="swapPhoto(this,3)"><img id="prev-p3" class="up-prev"></div>
+      <div class="ps-row" id="row-p3img"><label class="up-btn" for="ul-p3">📁 Upload photo for Post 3</label><input type="file" id="ul-p3" accept="image/*" style="display:none" onchange="swapPhoto(this,3)"><img id="prev-p3" class="up-prev"></div>
       <div class="ps-row"><span class="ps-label">Badge</span><input class="ps-input" id="f-p3badge" value="Četvrtak akcija" oninput="sync(this,['p3-badge-g','p3-badge-c'])"></div>
       <div class="ps-row"><span class="ps-label">Event name</span><input class="ps-input" id="f-p3day" value="Happy Hour" oninput="sync(this,['p3-day-g','p3-day-c'])"></div>
       <div class="ps-row"><span class="ps-label">Offer</span><textarea class="ps-input" id="f-p3offer" rows="2" oninput="sync(this,['p3-offer-g','p3-offer-c'])">Kafa + kisela voda po posebnoj ceni</textarea></div>
@@ -497,7 +497,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep" id="pep4">
-      <div class="ps-row"><label class="up-btn" for="ul-p4">📁 Photo for Post 4</label><input type="file" id="ul-p4" accept="image/*" style="display:none" onchange="swapPhoto(this,4)"><img id="prev-p4" class="up-prev"></div>
+      <div class="ps-row" id="row-p4img"><label class="up-btn" for="ul-p4">📁 Photo for Post 4</label><input type="file" id="ul-p4" accept="image/*" style="display:none" onchange="swapPhoto(this,4)"><img id="prev-p4" class="up-prev"></div>
       <div class="ps-row">
         <span class="ps-label">Media type</span>
         <select class="ps-input" id="f-p4media" onchange="setPostMediaType(4, this.value)">
@@ -529,7 +529,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep" id="pep5">
-      <div class="ps-row"><label class="up-btn" for="ul-p5">📁 Photo for Post 5</label><input type="file" id="ul-p5" accept="image/*" style="display:none" onchange="swapPhoto(this,5)"><img id="prev-p5" class="up-prev"></div>
+      <div class="ps-row" id="row-p5img"><label class="up-btn" for="ul-p5">📁 Photo for Post 5</label><input type="file" id="ul-p5" accept="image/*" style="display:none" onchange="swapPhoto(this,5)"><img id="prev-p5" class="up-prev"></div>
       <div class="ps-row">
         <span class="ps-label">Media type</span>
         <select class="ps-input" id="f-p5media" onchange="setPostMediaType(5, this.value)">
@@ -561,7 +561,7 @@ input[type=color].ctrl-color {
     </div>
 
     <div class="pep" id="pep6">
-      <div class="ps-row"><label class="up-btn" for="ul-p6">📁 Upload photo for Post 6</label><input type="file" id="ul-p6" accept="image/*" style="display:none" onchange="swapPhoto(this,6)"><img id="prev-p6" class="up-prev"></div>
+      <div class="ps-row" id="row-p6img"><label class="up-btn" for="ul-p6">📁 Upload photo for Post 6</label><input type="file" id="ul-p6" accept="image/*" style="display:none" onchange="swapPhoto(this,6)"><img id="prev-p6" class="up-prev"></div>
       <div class="ps-row"><span class="ps-label">Quote</span><textarea class="ps-input" id="f-p6quote" rows="2" oninput="sync(this,['p6-quote-g','p6-quote-c'])">"Pronađi svoj mir uz šoljicu kafe."</textarea></div>
       <div class="ps-row"><span class="ps-label">Title</span><textarea class="ps-input" id="f-p6title" rows="2" oninput="sync(this,['p6-title'])">Tvoje mesto za predah.</textarea></div>
       <div class="ps-row"><span class="ps-label">Caption</span><textarea class="ps-input" id="f-p6cap" rows="3" oninput="sync(this,['p6-cap'])">Isključi se na trenutak. Pronađi mir u harmoničnom ambijentu i najkvalitetnijem espresu u Žarkovu. 🌿</textarea></div>
@@ -1813,6 +1813,8 @@ function applyPostCfg(n){
   const rowV = document.getElementById(`row-p${n}vid`);
   if (rowY) rowY.style.display = (media === 'youtube') ? '' : 'none';
   if (rowV) rowV.style.display = (media === 'video') ? '' : 'none';
+  const rowI = document.getElementById(`row-p${n}img`);
+  if (rowI) rowI.style.display = (media === 'image') ? '' : 'none';
   const ytIn = document.getElementById(`f-p${n}yt`);
   if (ytIn && ytIn.value !== yt) ytIn.value = yt;
   const ov = document.getElementById(`f-p${n}overlay`);
