@@ -1157,7 +1157,7 @@ Be in harmony. 🍀</textarea></div>
     <div class="sec-desc" style="margin-bottom:24px;">Svaka objava spada u jednu od tri kategorije. To nije slučajno — tako feed ima ritam i svaki post ima smisla.</div>
     <div class="pillars">
       <div class="pillar"><span class="pillar-icon" id="pillar-icon-1"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></span><div class="pillar-title" id="pillar-title-1">Produkt & Kvalitet</div><div class="pillar-text" id="pillar-text-1">Fotografije kafe, zrna i detalja koji pokazuju šta Harmonia nudi. Saradnja sa Roosterom tu dolazi do izražaja.</div></div>
-      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><div class="pillar-title" id="pillar-title-2">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2">Kadrovi prostora, svetla i trenutaka koji dočaravaju kako izgleda biti u Harmoniji. Kratki citati koji prate fotografiju.</div></div>
+      <div class="pillar"><span class="pillar-icon" id="pillar-icon-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><div class="pillar-title" id="pillar-title-2">Emocija & Ambijent</div><div class="pillar-text" id="pillar-text-2">Kadrovi prostora, svetla i trenutaka koji pokazuju kako izgleda biti u Harmoniji — ambijent koji govori sam za sebe.</div></div>
       <div class="pillar"><span class="pillar-icon" id="pillar-icon-3"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pillar-title" id="pillar-title-3">Promocije & Akcije</div><div class="pillar-text" id="pillar-text-3">Happy Hour četvrtkom — konkretna akcija sa jasnom porukom. Ovakve objave direktno dovode ljude u lokal.</div></div>
     </div>
   </div>
@@ -1653,9 +1653,49 @@ document.head.appendChild(noBorderStyle);
 function swapPhoto(input, n) {
   const file = input.files && input.files[0]; if (!file) return;
 
-  // Support videos by URL (YouTube embed) is handled elsewhere; here we handle image uploads for static hosting.
+  // Handle video files — preview via object URL, queue for upload
   if (file.type && file.type.startsWith('video/')) {
-    alert('Video upload as file is disabled in this GitHub Pages flow. Use your YouTube link solution for videos.');
+    const objectUrl = URL.createObjectURL(file);
+    const publicPath = 'uploads/' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+    // Update grid (phone)
+    const gridCell = document.getElementById('grid-img-' + n);
+    if (gridCell) {
+      const host = gridCell.parentElement;
+      // Remove old img, insert video
+      gridCell.remove();
+      const v = document.createElement('video');
+      v.id = 'grid-img-' + n;
+      v.src = objectUrl;
+      v.autoplay = true;
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      host.insertBefore(v, host.firstChild);
+    }
+
+    // Update card
+    const cardHost = document.getElementById('card-img-' + n);
+    if (cardHost) {
+      const host = cardHost.parentElement;
+      cardHost.remove();
+      const v = document.createElement('video');
+      v.id = 'card-img-' + n;
+      v.src = objectUrl;
+      v.autoplay = true;
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.controls = true;
+      v.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      host.insertBefore(v, host.firstChild);
+    }
+
+    // Queue for publish
+    queueUploadFile(publicPath, file, file.name);
+    setPostCfg(n, { media_type: 'video', video_src: objectUrl });
+    typeof showToast === 'function' && showToast('Video set ✓');
     return;
   }
 
