@@ -2395,6 +2395,17 @@ async function swapVideo(inp, n){
 }
 
 function applyVideoToPost(n, url, publicPath) {
+  const handleVideoTap = function(e) {
+    const vid = e.currentTarget;
+    e.preventDefault();
+    const playBtn = vid.parentElement && vid.parentElement.querySelector('.video-play-btn');
+    if (vid.paused) {
+      vid.play().then(() => { if (playBtn) playBtn.remove(); }).catch(()=>{});
+    } else {
+      vid.muted = !vid.muted;
+    }
+  };
+
   [
     { el: document.getElementById('card-img-' + n), isCard: true },
     { el: document.getElementById('grid-img-' + n), isCard: false }
@@ -2415,6 +2426,7 @@ function applyVideoToPost(n, url, publicPath) {
     v.loop = true;
     v.playsInline = true;
     v.addEventListener('click', handleVideoTap);
+    v.addEventListener('touchend', handleVideoTap, { passive: false });
 
     if (isCard) {
       // Card: 9:16 full reel, uncropped
@@ -2432,18 +2444,7 @@ function applyVideoToPost(n, url, publicPath) {
     // Force play — some browsers block autoplay until explicitly called
     v.load();
 
-    // Click anywhere on video to play/unmute
-    const handleVideoTap = (e) => {
-      e.preventDefault();
-      const playBtn = host.querySelector('.video-play-btn');
-      if (v.paused) {
-        v.play().then(() => { if (playBtn) playBtn.remove(); }).catch(()=>{});
-      } else {
-        v.muted = !v.muted;
-      }
-    };
-    v.addEventListener('click', handleVideoTap);
-    v.addEventListener('touchend', handleVideoTap, { passive: false });
+    // Click/tap anywhere to play or toggle mute — handlers set in applyVideoToPost
 
     v.play().catch(() => {
       // Autoplay blocked — show a play hint overlay (clicking video or button starts it)
