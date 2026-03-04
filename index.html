@@ -1945,11 +1945,13 @@ function getClientHtml(){
       el.setAttribute('src', rel);
     } else if (el.tagName === 'VIDEO') {
       el.setAttribute('src', rel);
+      el.setAttribute('autoplay', '');
+      el.setAttribute('muted', '');
       el.setAttribute('loop', '');
       el.setAttribute('playsinline', '');
       el.setAttribute('webkit-playsinline', '');
       el.setAttribute('controls', '');
-      el.setAttribute('preload', 'metadata');
+      el.setAttribute('preload', 'auto');
       // Add <source> tag — Safari prefers this over src attribute
       const src = document.createElement('source');
       src.setAttribute('src', rel);
