@@ -2414,7 +2414,7 @@ function applyVideoToPost(n, url, publicPath) {
     v.muted = true;
     v.loop = true;
     v.playsInline = true;
-    v.addEventListener('click', () => { v.muted = !v.muted; });
+    v.addEventListener('click', handleVideoTap);
 
     if (isCard) {
       // Card: 9:16 full reel, uncropped
@@ -2431,12 +2431,26 @@ function applyVideoToPost(n, url, publicPath) {
     host.insertBefore(v, host.firstChild);
     // Force play — some browsers block autoplay until explicitly called
     v.load();
+
+    // Click anywhere on video to play/unmute
+    const handleVideoTap = (e) => {
+      e.preventDefault();
+      const playBtn = host.querySelector('.video-play-btn');
+      if (v.paused) {
+        v.play().then(() => { if (playBtn) playBtn.remove(); }).catch(()=>{});
+      } else {
+        v.muted = !v.muted;
+      }
+    };
+    v.addEventListener('click', handleVideoTap);
+    v.addEventListener('touchend', handleVideoTap, { passive: false });
+
     v.play().catch(() => {
-      // Autoplay blocked — show a play button overlay
+      // Autoplay blocked — show a play hint overlay (clicking video or button starts it)
       const playBtn = document.createElement('div');
-      playBtn.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;';
-      playBtn.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)"><circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.45)"/><polygon points="10,8 18,12 10,16"/></svg>';
-      playBtn.onclick = () => { v.play(); playBtn.remove(); };
+      playBtn.className = 'video-play-btn';
+      playBtn.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;-webkit-tap-highlight-color:transparent;pointer-events:none;';
+      playBtn.innerHTML = '<svg width="64" height="64" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.5)"/><polygon points="10,8 18,12 10,16" fill="rgba(255,255,255,0.9)"/></svg>';
       host.appendChild(playBtn);
     });
 
