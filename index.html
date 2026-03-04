@@ -1945,11 +1945,12 @@ function getClientHtml(){
       el.setAttribute('src', rel);
     } else if (el.tagName === 'VIDEO') {
       el.setAttribute('src', rel);
-      el.setAttribute('autoplay', '');
-      el.setAttribute('muted', '');
       el.setAttribute('loop', '');
       el.setAttribute('playsinline', '');
       el.setAttribute('controls', '');
+      // No autoplay+muted on client — let user press play with sound
+      el.removeAttribute('autoplay');
+      el.removeAttribute('muted');
       el.querySelectorAll('source').forEach(s => s.setAttribute('src', rel));
     }
   });
