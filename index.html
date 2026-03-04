@@ -1945,6 +1945,11 @@ function getClientHtml(){
       el.setAttribute('src', rel);
     } else if (el.tagName === 'VIDEO') {
       el.setAttribute('src', rel);
+      el.setAttribute('autoplay', '');
+      el.setAttribute('muted', '');
+      el.setAttribute('loop', '');
+      el.setAttribute('playsinline', '');
+      el.setAttribute('controls', '');
       el.querySelectorAll('source').forEach(s => s.setAttribute('src', rel));
     }
   });
@@ -1977,14 +1982,24 @@ async function publishToClient(){
     let i = 0;
     for (const [publicPath, rec] of entries){
       i++;
-      setPublishStatus(`Uploading assets ${i}/${entries.length}…`);
-      const b64 = await blobToBase64(rec.blob);
-      await githubUpsertFile({
-        ...cfg,
-        path: publicPath, // e.g. uploads/x.webp
-        contentBase64: b64,
-        message: `assets: ${publicPath}`
-      });
+      setPublishStatus(`Uploading asset ${i}/${entries.length}: ${publicPath}…`);
+      try {
+        const b64 = await blobToBase64(rec.blob);
+        await githubUpsertFile({
+          ...cfg,
+          path: publicPath,
+          contentBase64: b64,
+          message: `assets: ${publicPath}`
+        });
+      } catch(assetErr) {
+        console.error('Asset upload failed:', publicPath, assetErr);
+        const skip = confirm(`Failed to upload ${publicPath}.
+
+${assetErr?.message || assetErr}
+
+Continue publishing without this file?`);
+        if (!skip) throw assetErr;
+      }
     }
 
     // 2) client index.html (root)
@@ -2389,9 +2404,14 @@ async function swapVideo(inp, n){
   // Apply directly to DOM — bypass setPostCfg blob-stripping
   applyVideoToPost(n, url, publicPath);
 
-  // Queue for publish
+  // Queue for publish — warn if file is large
+  const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+  if (file.size > 50 * 1024 * 1024) {
+    typeof showToast === 'function' && showToast(`⚠️ Video is ${sizeMB}MB — may fail to publish via GitHub API. Try compressing it under 50MB.`);
+  } else {
+    typeof showToast === 'function' && showToast(`Video set ✓ (${sizeMB}MB)`);
+  }
   queueUploadFile(publicPath, file, file.name);
-  typeof showToast === 'function' && showToast('Video set ✓');
 }
 
 function applyVideoToPost(n, url, publicPath) {
