@@ -2446,7 +2446,7 @@ function applyVideoToPost(n, url, publicPath) {
 
     const v = document.createElement('video');
     v.id = (isCard ? 'card-img-' : 'grid-img-') + n;
-    v.src = url;
+    v.setAttribute('src', url);  // set as attribute so DOM clone captures it
     if (publicPath) v.dataset.uploadPath = publicPath;
     v.autoplay = true;
     v.muted = true;
@@ -2508,9 +2508,13 @@ function swapBeforeScreenshot(inp) {
   const prev = document.getElementById('prev-beforeShot');
   if (prev) { prev.src = url; prev.style.display = 'block'; }
 
-  // Queue for publish
-  window.__pendingUploads = window.__pendingUploads || {};
-  window.__pendingUploads['before_screenshot'] = file;
+  // Queue for publish via __uploadQueue (same as images/videos)
+  const beforePath = 'uploads/before_screenshot' + file.name.replace(/.*(\.[^.]+)$/, '$1');
+  window.__uploadQueue = window.__uploadQueue || {};
+  window.__uploadQueue[beforePath] = { blob: file, filename: file.name };
+  // Tag the img element so getClientHtml replaces blob URL with path
+  const beforeImg = document.getElementById('before-screenshot-img');
+  if (beforeImg) beforeImg.dataset.uploadPath = beforePath;
 
   // Persist as base64 so it survives page reload
   const reader = new FileReader();
