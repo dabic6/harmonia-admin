@@ -2429,6 +2429,16 @@ function applyVideoToPost(n, url, publicPath) {
     }
 
     host.insertBefore(v, host.firstChild);
+    // Force play — some browsers block autoplay until explicitly called
+    v.load();
+    v.play().catch(() => {
+      // Autoplay blocked — show a play button overlay
+      const playBtn = document.createElement('div');
+      playBtn.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;';
+      playBtn.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)"><circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.45)"/><polygon points="10,8 18,12 10,16"/></svg>';
+      playBtn.onclick = () => { v.play(); playBtn.remove(); };
+      host.appendChild(playBtn);
+    });
 
     // Reel indicator on grid only (like Instagram)
     if (!isCard) {
