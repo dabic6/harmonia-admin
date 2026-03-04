@@ -1947,8 +1947,14 @@ function getClientHtml(){
       el.setAttribute('src', rel);
       el.setAttribute('loop', '');
       el.setAttribute('playsinline', '');
+      el.setAttribute('webkit-playsinline', '');
       el.setAttribute('controls', '');
-      // No autoplay+muted on client — let user press play with sound
+      el.setAttribute('preload', 'metadata');
+      // Add <source> tag — Safari prefers this over src attribute
+      const src = document.createElement('source');
+      src.setAttribute('src', rel);
+      src.setAttribute('type', 'video/mp4');
+      el.insertBefore(src, el.firstChild);
       el.removeAttribute('autoplay');
       el.removeAttribute('muted');
       el.querySelectorAll('source').forEach(s => s.setAttribute('src', rel));
