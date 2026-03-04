@@ -537,6 +537,7 @@ input[type=color].ctrl-color {
   <!-- Panel header with all actions -->
   <div style="padding:12px 16px 10px;background:#0d0b14;border-bottom:1px solid rgba(139,92,246,0.15);display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
     <span style="font-family:'Playfair Display',serif;font-size:12px;color:var(--gold-light);font-style:italic;margin-right:4px;flex-shrink:0;">✦ Harmonia Editor</span>
+    <button onclick="togglePanel()" style="margin-left:auto;background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);border-radius:6px;padding:3px 10px;cursor:pointer;font-size:13px;flex-shrink:0;" title="Close panel">✕</button>
     <button class="tb-btn" id="btn-edit" onclick="toggleEdit()">✏️ Edit Text</button>
     <button class="tb-btn" onclick="window.print()">🖨️ PDF</button>
     <button class="tb-btn" onclick="openGitSettings()">⚙️ GitHub</button>
@@ -1929,7 +1930,7 @@ function getClientHtml(){
   const style = doc.querySelector('head style') || doc.querySelector('style');
   const extraCSS = `
 /* client view */
-#toolbar,#panel,#edit-pill,#git-modal{display:none!important;}
+#toolbar,#panel,#edit-pill,#git-modal,#edit-fab{display:none!important;}
 #main{padding-top:0!important;margin-right:0!important;}
 [contenteditable]{outline:none!important;background:none!important;}
 `;
