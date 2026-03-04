@@ -1935,10 +1935,17 @@ function getClientHtml(){
 `;
   if (style) style.textContent += extraCSS;
 
-  // 5) Replace blob object URLs with public repo paths
-  doc.querySelectorAll('img[data-upload-path]').forEach(img=>{
-    const p = img.getAttribute('data-upload-path');
-    if (p) img.setAttribute('src', p);
+  // 5) Replace blob object URLs with public repo paths (relative for GitHub Pages)
+  doc.querySelectorAll('[data-upload-path]').forEach(el=>{
+    const p = el.getAttribute('data-upload-path');
+    if (!p) return;
+    const rel = p.replace(/^\//,''); // ensure relative path
+    if (el.tagName === 'IMG') {
+      el.setAttribute('src', rel);
+    } else if (el.tagName === 'VIDEO') {
+      el.setAttribute('src', rel);
+      el.querySelectorAll('source').forEach(s => s.setAttribute('src', rel));
+    }
   });
 
   // 6) Strip contenteditable attributes
@@ -2379,14 +2386,14 @@ async function swapVideo(inp, n){
   localStorage.setItem(__postCfgKey(n), JSON.stringify(toStore));
 
   // Apply directly to DOM — bypass setPostCfg blob-stripping
-  applyVideoToPost(n, url);
+  applyVideoToPost(n, url, publicPath);
 
   // Queue for publish
   queueUploadFile(publicPath, file, file.name);
   typeof showToast === 'function' && showToast('Video set ✓');
 }
 
-function applyVideoToPost(n, url) {
+function applyVideoToPost(n, url, publicPath) {
   [
     { el: document.getElementById('card-img-' + n), isCard: true },
     { el: document.getElementById('grid-img-' + n), isCard: false }
@@ -2401,6 +2408,7 @@ function applyVideoToPost(n, url) {
     const v = document.createElement('video');
     v.id = (isCard ? 'card-img-' : 'grid-img-') + n;
     v.src = url;
+    if (publicPath) v.dataset.uploadPath = publicPath;
     v.autoplay = true;
     v.muted = true;
     v.loop = true;
